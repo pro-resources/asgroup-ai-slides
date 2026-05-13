@@ -261,6 +261,13 @@
       flex: 0 0 auto;
     }
 
+    .brand-img-openclaw {
+      width: 38px;
+      height: 30px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
+
     .brand-wordmark {
       height: 30px;
       min-width: 30px;
@@ -375,6 +382,11 @@
       height: 23px;
     }
 
+    .tool-slide .brand-img-openclaw {
+      width: 31px;
+      height: 23px;
+    }
+
     .tool-slide .logo-top {
       gap: 7px;
     }
@@ -465,19 +477,19 @@
     .graduation {
       align-self: center;
       display: grid;
-      grid-template-columns: 1fr 0.28fr 1fr;
-      gap: 24px;
+      grid-template-columns: 1fr 44px 1fr 44px 1fr;
+      gap: 16px;
       align-items: center;
     }
 
     .grad-panel {
-      min-height: 420px;
+      min-height: 390px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--white);
-      padding: 30px;
+      padding: 22px;
       display: grid;
-      gap: 18px;
+      gap: 14px;
       align-content: center;
     }
 
@@ -488,13 +500,34 @@
     }
 
     .grad-panel h3 {
-      font-size: 34px;
+      font-size: 28px;
     }
 
     .grad-panel.dark h3,
     .grad-panel.dark li,
     .grad-panel.dark p {
       color: var(--white);
+    }
+
+    .grad-panel.agent {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: var(--white);
+    }
+
+    .grad-panel.agent h3,
+    .grad-panel.agent li {
+      color: var(--white);
+    }
+
+    .grad-panel .tag {
+      font-size: 17px;
+      padding: 8px 11px;
+    }
+
+    .grad-panel .bullets {
+      font-size: 22px;
+      gap: 12px;
     }
 
     .grad-arrow {
@@ -951,20 +984,42 @@
       min-height: 430px;
     }
 
+    .operator-map::before,
+    .operator-map::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(36, 91, 112, 0.18);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .operator-map::before {
+      width: 360px;
+      height: 280px;
+    }
+
+    .operator-map::after {
+      width: 230px;
+      height: 230px;
+    }
+
     .person {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 200px;
-      height: 200px;
+      width: 184px;
+      height: 184px;
       border-radius: 50%;
       background: var(--blue);
       color: var(--white);
       display: grid;
       place-items: center;
       text-align: center;
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 850;
       line-height: 1.05;
       box-shadow: 0 14px 36px rgba(36, 91, 112, 0.24);
@@ -973,24 +1028,25 @@
 
     .orbit {
       position: absolute;
-      width: 172px;
-      min-height: 76px;
-      padding: 14px;
+      width: 156px;
+      min-height: 68px;
+      padding: 12px;
       border: 1px solid var(--line);
       background: var(--white);
       border-radius: 8px;
       display: grid;
       place-items: center;
       text-align: center;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 760;
       color: var(--graphite);
+      z-index: 2;
     }
 
-    .o1 { left: 26px; top: 12px; }
-    .o2 { right: 30px; top: 28px; }
-    .o3 { left: 0; bottom: 42px; }
-    .o4 { right: 8px; bottom: 24px; }
+    .o1 { left: 8px; top: 48px; }
+    .o2 { right: 8px; top: 48px; }
+    .o3 { left: 8px; bottom: 54px; }
+    .o4 { right: 8px; bottom: 54px; }
     .o5 { left: 50%; top: 0; transform: translateX(-50%); }
     .o6 { left: 50%; bottom: 0; transform: translateX(-50%); }
 
@@ -1218,7 +1274,7 @@
 
     <section class="slide">
       <div>
-        <div class="kicker">Browser AI to builder agents</div>
+        <div class="kicker">Browser AI to autonomous agents</div>
         <h2>The jump is from answers to work.</h2>
       </div>
       <div class="graduation">
@@ -1251,6 +1307,20 @@
             <li>Leaves behind durable tools.</li>
           </ul>
         </div>
+        <div class="grad-arrow"></div>
+        <div class="grad-panel agent">
+          <h3>Autonomous agents</h3>
+          <div class="tag-row">
+            <div class="tag">OpenClaw</div>
+            <div class="tag">Hermes</div>
+          </div>
+          <ul class="bullets">
+            <li>Runs longer jobs with less hand-holding.</li>
+            <li>Can connect tools, memory, and services.</li>
+            <li>Works best with tight permissions.</li>
+            <li>Needs logging, approvals, and guardrails.</li>
+          </ul>
+        </div>
       </div>
       <div class="footer"><span>Do not evaluate AI only by asking questions in a chat box.</span><span class="slide-number">6 / 17</span></div>
     </section>
@@ -1272,6 +1342,8 @@
           <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Cursor" data-is="An AI-first code editor." data-does="Brings AI into the editor for code search, edits, autocomplete, and project work." data-doesnt="It is not a business-data strategy; it still depends on what files and systems it can access."><div class="logo-top"><img class="brand-img" src="assets/logos/cursor.svg" alt=""><div><div class="logo-name">Cursor</div><div class="logo-note">AI code editor</div></div></div></button>
           <button type="button" class="logo-card company-card" aria-pressed="false" data-name="GitHub Copilot" data-is="An AI coding assistant inside developer tools." data-does="Helps write code, review code, and assist developers inside GitHub and IDE workflows." data-doesnt="It does not replace product judgment or an internal owner who understands the business process."><div class="logo-top"><img class="brand-img" src="assets/logos/githubcopilot.svg" alt=""><div><div class="logo-name">GitHub Copilot</div><div class="logo-note">dev assistant</div></div></div></button>
           <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Abacus.AI" data-is="An AI and agent platform." data-does="Can help build agents, apps, model workflows, and AI-enabled business processes." data-doesnt="It still needs clean source data, permissions, monitoring, and feedback to be useful."><div class="logo-top"><img class="brand-img" src="assets/logos/abacus.ico" alt=""><div><div class="logo-name">Abacus.AI</div><div class="logo-note">agent platform</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="OpenClaw" data-is="An open-source, self-hosted autonomous agent platform." data-does="Can run persistent tasks, connect models to tools, and operate across local systems and services." data-doesnt="It is not a safe default for sensitive company data without permissions, logging, approvals, and strong boundaries."><div class="logo-top"><img class="brand-img-openclaw" src="assets/logos/openclaw-logo.svg" alt=""><div><div class="logo-name">OpenClaw</div><div class="logo-note">agent OS</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Hermes" data-is="An autonomous-agent example in the self-hosted / memory-driven agent category." data-does="Highlights the direction toward agents that keep context, build skills, and run longer workflows." data-doesnt="It is not a plug-and-play replacement for governance, security, or business process ownership."><div class="logo-top"><img class="brand-img" src="assets/logos/hermes-agent-logo.svg" alt=""><div><div class="logo-name">Hermes</div><div class="logo-note">autonomous agent</div></div></div></button>
           <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Copilot Studio" data-is="Microsoft's tool for building copilots and agents." data-does="Connects Microsoft ecosystem tools, workflows, knowledge sources, and agent experiences." data-doesnt="It will only be as good as the business rules, connectors, and data governance behind it."><div class="logo-top"><div class="ms-mark"><span></span><span></span><span></span><span></span></div><div><div class="logo-name">Copilot Studio</div><div class="logo-note">agent builder</div></div></div></button>
           <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Make" data-is="A visual workflow automation platform." data-does="Moves data between systems and automates repeated handoffs without much custom code." data-doesnt="It is usually a bridge, not the long-term brain of the company."><div class="logo-top"><img class="brand-img" src="assets/logos/make.svg" alt=""><div><div class="logo-name">Make</div><div class="logo-note">automation</div></div></div></button>
           <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Zapier" data-is="A broad app-to-app automation platform." data-does="Connects common SaaS tools and creates quick workflow automations." data-doesnt="It can create fragile process sprawl if nobody owns the workflow and feedback."><div class="logo-top"><img class="brand-img" src="assets/logos/zapier.svg" alt=""><div><div class="logo-name">Zapier</div><div class="logo-note">automation</div></div></div></button>
