@@ -1,0 +1,9 @@
+# Internal working docs — keep local, not public
+CODEX-REVIEW-BRIEF.md
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

@@ -1,0 +1,1693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Future-Proofing With AI - ASGroup</title>
+  <style>
+    :root {
+      --ink: #172026;
+      --muted: #60707a;
+      --line: #d8e0e5;
+      --paper: #f7f4ee;
+      --white: #fffdf8;
+      --blue: #245b70;
+      --teal: #24816d;
+      --gold: #c98b2c;
+      --red: #b84e43;
+      --graphite: #253238;
+      --shadow: 0 22px 60px rgba(30, 40, 45, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: #182126;
+      color: var(--ink);
+      font-family: Aptos, "Segoe UI", Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+    }
+
+    .deck {
+      position: relative;
+      width: 1280px;
+      height: 720px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: 58px 72px 54px;
+      background:
+        linear-gradient(90deg, rgba(36, 91, 112, 0.08), transparent 34%),
+        var(--paper);
+    }
+
+    .slide.active {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 22px;
+    }
+
+    .kicker {
+      color: var(--blue);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      max-width: 980px;
+      font-size: 68px;
+      line-height: 0.96;
+      letter-spacing: 0;
+      color: var(--graphite);
+    }
+
+    h2 {
+      max-width: 1040px;
+      font-size: 48px;
+      line-height: 1.02;
+      letter-spacing: 0;
+      color: var(--graphite);
+    }
+
+    h3 {
+      font-size: 24px;
+      line-height: 1.1;
+      color: var(--graphite);
+    }
+
+    .subtitle {
+      max-width: 840px;
+      font-size: 28px;
+      line-height: 1.25;
+      color: var(--muted);
+      margin-top: 22px;
+    }
+
+    .hero-line {
+      align-self: center;
+      display: grid;
+      gap: 30px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #71808a;
+      font-size: 16px;
+    }
+
+    .slide-number {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .quote {
+      align-self: center;
+      max-width: 1080px;
+      font-size: 64px;
+      line-height: 1.02;
+      font-weight: 850;
+      color: var(--graphite);
+    }
+
+    .quote .accent { color: var(--red); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 248, 0.84);
+      border-radius: 8px;
+      padding: 28px;
+      min-height: 172px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .panel.dark {
+      background: var(--graphite);
+      color: var(--white);
+      border-color: var(--graphite);
+    }
+
+    .panel.dark h3,
+    .panel.dark p { color: var(--white); }
+
+    .panel p {
+      font-size: 23px;
+      line-height: 1.28;
+      color: var(--muted);
+    }
+
+    .bullets {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    .bullets li {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      background: var(--white);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 20px;
+      color: var(--graphite);
+      font-weight: 700;
+    }
+
+    .logo-grid {
+      align-self: center;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .logo-card {
+      min-height: 78px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      border-radius: 8px;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      align-content: center;
+    }
+
+    button.logo-card {
+      width: 100%;
+      font: inherit;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    button.logo-card:hover,
+    button.logo-card:focus-visible,
+    .logo-card.active {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(36, 91, 112, 0.14);
+      outline: none;
+    }
+
+    .logo-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
+
+    .brand-wordmark {
+      height: 30px;
+      min-width: 30px;
+      border-radius: 7px;
+      display: grid;
+      place-items: center;
+      padding: 0 7px;
+      color: white;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .ms-mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+      flex: 0 0 auto;
+    }
+
+    .ms-mark span:nth-child(1) { background: #f25022; }
+    .ms-mark span:nth-child(2) { background: #7fba00; }
+    .ms-mark span:nth-child(3) { background: #00a4ef; }
+    .ms-mark span:nth-child(4) { background: #ffb900; }
+
+    .brandmark {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+
+    .logo-name {
+      font-size: 15px;
+      line-height: 1.05;
+      font-weight: 850;
+      color: var(--graphite);
+    }
+
+    .logo-note {
+      font-size: 11px;
+      line-height: 1.15;
+      color: var(--muted);
+    }
+
+    .openai { background: #111827; }
+    .anthropic { background: #8a6a4f; }
+    .cursor { background: #111111; }
+    .microsoft { background: #246bfe; }
+    .google { background: #1a73e8; }
+    .perplexity { background: #20808d; }
+    .zapier { background: #ff4a00; }
+    .n8n { background: #ea4b71; }
+    .snowflake { background: #29a8df; }
+    .avionte { background: #22577a; }
+    .ringover { background: #6c4df6; }
+    .sense { background: #0c7c59; }
+    .powerbi { background: #d8a300; color: #172026; }
+    .pro { background: var(--blue); }
+
+    .tool-combo {
+      align-self: center;
+      display: grid;
+      grid-template-columns: 1.6fr 0.8fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .tool-slide {
+      padding: 44px 72px 36px;
+    }
+
+    .tool-slide.active {
+      grid-template-rows: auto auto auto auto;
+      gap: 12px;
+    }
+
+    .tool-slide h2 {
+      font-size: 42px;
+    }
+
+    .tool-slide .tool-combo {
+      align-self: start;
+    }
+
+    .tool-combo .logo-grid {
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: 54px;
+      align-self: start;
+      align-content: start;
+      gap: 8px;
+    }
+
+    .tool-slide .logo-card {
+      min-height: 54px;
+      padding: 6px 9px;
+    }
+
+    .tool-slide .brand-img,
+    .tool-slide .brand-wordmark,
+    .tool-slide .brandmark,
+    .tool-slide .ms-mark {
+      width: 23px;
+      height: 23px;
+    }
+
+    .tool-slide .logo-top {
+      gap: 7px;
+    }
+
+    .tool-slide .logo-top > div {
+      min-width: 0;
+    }
+
+    .tool-slide .logo-name {
+      font-size: 12px;
+    }
+
+    .tool-slide .logo-note {
+      font-size: 8.5px;
+    }
+
+    .foundation-stack {
+      display: grid;
+      gap: 7px;
+    }
+
+    .foundation-stack .panel {
+      min-height: auto;
+      padding: 16px;
+    }
+
+    .foundation-stack .panel h3 {
+      font-size: 21px;
+    }
+
+    .foundation-stack .panel p {
+      font-size: 18px;
+      line-height: 1.18;
+    }
+
+    .foundation-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.9);
+      padding: 9px 14px;
+      display: grid;
+      gap: 3px;
+    }
+
+    .foundation-item strong {
+      font-size: 17px;
+      color: var(--graphite);
+    }
+
+    .foundation-item span {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.16;
+    }
+
+    .tool-about {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.94);
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: 0.78fr 1fr 1fr;
+      gap: 16px;
+      min-height: 88px;
+      align-items: start;
+    }
+
+    .tool-about h3 {
+      font-size: 21px;
+      margin-bottom: 4px;
+    }
+
+    .tool-about strong {
+      display: block;
+      font-size: 13px;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .tool-about p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.22;
+    }
+
+    .graduation {
+      align-self: center;
+      display: grid;
+      grid-template-columns: 1fr 0.28fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .grad-panel {
+      min-height: 420px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      padding: 30px;
+      display: grid;
+      gap: 18px;
+      align-content: center;
+    }
+
+    .grad-panel.dark {
+      background: var(--graphite);
+      border-color: var(--graphite);
+      color: var(--white);
+    }
+
+    .grad-panel h3 {
+      font-size: 34px;
+    }
+
+    .grad-panel.dark h3,
+    .grad-panel.dark li,
+    .grad-panel.dark p {
+      color: var(--white);
+    }
+
+    .grad-arrow {
+      height: 4px;
+      background: var(--gold);
+      position: relative;
+    }
+
+    .grad-arrow::after {
+      content: "";
+      position: absolute;
+      right: -4px;
+      top: -12px;
+      border-left: 24px solid var(--gold);
+      border-top: 14px solid transparent;
+      border-bottom: 14px solid transparent;
+    }
+
+    .cycle-wrap {
+      align-self: center;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .cycle {
+      position: relative;
+      min-height: 470px;
+    }
+
+    .cycle-center {
+      position: absolute;
+      inset: 145px 190px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 32px;
+      line-height: 1.04;
+      font-weight: 900;
+      box-shadow: 0 18px 48px rgba(36, 91, 112, 0.22);
+    }
+
+    .cycle-step {
+      position: absolute;
+      width: 186px;
+      min-height: 86px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      padding: 14px;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      gap: 4px;
+    }
+
+    .cycle-step strong {
+      font-size: 22px;
+      color: var(--graphite);
+      line-height: 1.05;
+    }
+
+    .cycle-step span {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.15;
+    }
+
+    .c1 { left: 210px; top: 0; }
+    .c2 { right: 10px; top: 90px; }
+    .c3 { right: 30px; bottom: 74px; }
+    .c4 { left: 210px; bottom: 0; }
+    .c5 { left: 20px; bottom: 74px; }
+    .c6 { left: 0; top: 90px; }
+
+    .infra-map {
+      align-self: center;
+      border: 1px solid var(--line);
+      background: var(--white);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .infra-map svg {
+      width: 100%;
+      height: 390px;
+      display: block;
+    }
+
+    .infra-map .node {
+      fill: #fffdf8;
+      stroke: #ccd8e0;
+      stroke-width: 1.6;
+    }
+
+    .infra-map .hub {
+      fill: #14283a;
+      stroke: #14283a;
+    }
+
+    .infra-map .edge {
+      fill: none;
+      stroke: #9aa8b8;
+      stroke-width: 2.2;
+    }
+
+    .infra-map .edge.heavy {
+      stroke: #2b6cb0;
+      stroke-width: 3.2;
+    }
+
+    .infra-map .edge.warn {
+      stroke: #c95b22;
+      stroke-width: 2.2;
+    }
+
+    .infra-map .hub-title {
+      fill: #fffdf8;
+      font-size: 19px;
+      font-weight: 850;
+    }
+
+    .infra-map .hub-sub {
+      fill: #d8e6f0;
+      font-size: 12px;
+    }
+
+    .infra-map .node-title {
+      fill: #172026;
+      font-size: 16px;
+      font-weight: 850;
+    }
+
+    .infra-map .node-sub {
+      fill: #60707a;
+      font-size: 12px;
+    }
+
+    .agenda {
+      align-self: center;
+      display: grid;
+      gap: 10px;
+      counter-reset: agenda;
+    }
+
+    .agenda-item {
+      counter-increment: agenda;
+      display: grid;
+      grid-template-columns: 54px 1fr 118px;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 18px;
+      background: rgba(255, 253, 248, 0.86);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 24px;
+      font-weight: 760;
+    }
+
+    .agenda-item::before {
+      content: counter(agenda);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+
+    .time {
+      justify-self: end;
+      color: var(--muted);
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .flow {
+      align-self: center;
+      display: grid;
+      grid-template-columns: 1fr 78px 1fr 78px 1fr;
+      align-items: center;
+      gap: 0;
+    }
+
+    .flow-box {
+      min-height: 186px;
+      padding: 26px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      display: grid;
+      align-content: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .flow-box strong {
+      font-size: 30px;
+      line-height: 1;
+      color: var(--graphite);
+    }
+
+    .flow-box span {
+      font-size: 21px;
+      line-height: 1.2;
+      color: var(--muted);
+    }
+
+    .arrow {
+      height: 4px;
+      background: var(--blue);
+      position: relative;
+    }
+
+    .arrow::after {
+      content: "";
+      position: absolute;
+      right: -2px;
+      top: -8px;
+      border-left: 18px solid var(--blue);
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+    }
+
+    .failure-grid {
+      align-self: center;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .failure {
+      min-height: 190px;
+      display: grid;
+      align-content: center;
+      gap: 12px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid rgba(184, 78, 67, 0.36);
+      border-radius: 8px;
+      background: rgba(184, 78, 67, 0.09);
+    }
+
+    .failure strong {
+      font-size: 24px;
+      line-height: 1.08;
+      color: var(--graphite);
+    }
+
+    .failure span {
+      font-size: 18px;
+      line-height: 1.2;
+      color: var(--muted);
+    }
+
+    .model-reality {
+      align-self: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+    }
+
+    .model-card {
+      min-height: 360px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.9);
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .model-card.dark {
+      background: var(--graphite);
+      border-color: var(--graphite);
+      color: var(--white);
+    }
+
+    .model-card .label {
+      font-size: 17px;
+      font-weight: 850;
+      color: var(--blue);
+      text-transform: uppercase;
+    }
+
+    .model-card.dark .label,
+    .model-card.dark h3,
+    .model-card.dark li {
+      color: var(--white);
+    }
+
+    .model-card h3 {
+      font-size: 30px;
+      line-height: 1.02;
+    }
+
+    .model-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 11px;
+    }
+
+    .model-card li {
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.18;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .model-card li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      position: absolute;
+      left: 0;
+      top: 0.46em;
+    }
+
+    .loop {
+      align-self: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .loop .center {
+      grid-row: span 2;
+      min-height: 300px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 3px solid var(--blue);
+      background: var(--white);
+      border-radius: 8px;
+      padding: 28px;
+    }
+
+    .loop .center strong {
+      font-size: 40px;
+      line-height: 1;
+      color: var(--blue);
+    }
+
+    .loop-node {
+      min-height: 132px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 248, 0.88);
+      border-radius: 8px;
+      padding: 18px;
+      display: grid;
+      align-content: center;
+      gap: 8px;
+    }
+
+    .loop-node strong {
+      font-size: 24px;
+      color: var(--graphite);
+    }
+
+    .loop-node span {
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.22;
+    }
+
+    .context-stack {
+      align-self: center;
+      display: grid;
+      grid-template-columns: 1fr 1.22fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .stack-col {
+      display: grid;
+      gap: 12px;
+      align-content: stretch;
+    }
+
+    .stack-title {
+      font-size: 20px;
+      font-weight: 850;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    .stack-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 248, 0.9);
+      border-radius: 8px;
+      padding: 16px 18px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .stack-card strong {
+      font-size: 21px;
+      color: var(--graphite);
+      line-height: 1.05;
+    }
+
+    .stack-card span {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.18;
+    }
+
+    .stack-core {
+      border: 3px solid var(--blue);
+      background: var(--white);
+      border-radius: 8px;
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+      align-content: center;
+      text-align: center;
+    }
+
+    .stack-core strong {
+      font-size: 38px;
+      line-height: 1;
+      color: var(--blue);
+    }
+
+    .stack-core span {
+      font-size: 19px;
+      line-height: 1.22;
+      color: var(--muted);
+    }
+
+    .operator {
+      align-self: center;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .operator-map {
+      position: relative;
+      min-height: 430px;
+    }
+
+    .person {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 850;
+      line-height: 1.05;
+      box-shadow: 0 14px 36px rgba(36, 91, 112, 0.24);
+      z-index: 3;
+    }
+
+    .orbit {
+      position: absolute;
+      width: 172px;
+      min-height: 76px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 760;
+      color: var(--graphite);
+    }
+
+    .o1 { left: 26px; top: 12px; }
+    .o2 { right: 30px; top: 28px; }
+    .o3 { left: 0; bottom: 42px; }
+    .o4 { right: 8px; bottom: 24px; }
+    .o5 { left: 50%; top: 0; transform: translateX(-50%); }
+    .o6 { left: 50%; bottom: 0; transform: translateX(-50%); }
+
+    .contrast {
+      align-self: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .contrast .label {
+      font-size: 20px;
+      font-weight: 850;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .contrast .question {
+      font-size: 47px;
+      line-height: 1.04;
+      font-weight: 850;
+      color: var(--graphite);
+    }
+
+    .contrast .dark .label {
+      color: rgba(255, 253, 248, 0.72);
+    }
+
+    .contrast .dark .question {
+      color: var(--white);
+    }
+
+    .checklist {
+      align-self: center;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px 22px;
+      font-size: 24px;
+      line-height: 1.18;
+      font-weight: 700;
+    }
+
+    .check {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 248, 0.88);
+      border-radius: 8px;
+    }
+
+    .check::before {
+      content: "";
+      width: 22px;
+      height: 22px;
+      margin-top: 3px;
+      border-radius: 5px;
+      background: var(--teal);
+      box-shadow: inset 0 0 0 5px var(--white);
+    }
+
+    .discussion {
+      align-self: center;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      font-size: 29px;
+      line-height: 1.15;
+      font-weight: 780;
+    }
+
+    .discussion div {
+      min-height: 122px;
+      border-left: 8px solid var(--gold);
+      background: rgba(255, 253, 248, 0.88);
+      padding: 22px;
+      border-radius: 0 8px 8px 0;
+      display: grid;
+      align-content: center;
+    }
+
+    .controls {
+      position: fixed;
+      right: 18px;
+      bottom: 16px;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(23, 32, 38, 0.74);
+      color: white;
+      font-size: 14px;
+      opacity: 0.18;
+      transition: opacity 160ms ease;
+    }
+
+    .controls:hover,
+    .controls:focus-within {
+      opacity: 1;
+    }
+
+    .controls button {
+      border: 0;
+      background: rgba(255, 255, 255, 0.14);
+      color: white;
+      border-radius: 6px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .controls button:hover {
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    @media print {
+      html, body {
+        overflow: visible;
+        background: white;
+      }
+      body { display: block; }
+      .deck {
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+        overflow: visible;
+      }
+      .slide {
+        position: relative;
+        display: grid !important;
+        width: 13.333in;
+        height: 7.5in;
+        page-break-after: always;
+      }
+      .controls { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide active">
+      <div class="kicker">Owners / Leadership</div>
+      <div class="hero-line">
+        <h1>Future-Proofing With AI</h1>
+        <p class="subtitle">What staffing owners need to build, own, and understand before they automate everything.</p>
+        <div class="tag-row">
+          <div class="tag">Brent Becker</div>
+          <div class="tag">Ben Ferguson</div>
+          <div class="tag">ASGroup</div>
+        </div>
+      </div>
+      <div class="footer"><span>Bluegrass Ballroom</span><span class="slide-number">1 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">The honest reset</div>
+      <div class="quote">The agenda is a little ahead of where we actually are. <span class="accent">That is why this matters.</span></div>
+      <div class="footer"><span>We are building the foundation.</span><span class="slide-number">2 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Session spine</div>
+      <div class="quote">No one is coming to save us.</div>
+      <div class="footer"><span>Tools can help. Ownership cannot be outsourced.</span><span class="slide-number">3 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">90-minute flow</div>
+        <h2>Keep it tight enough to actually land.</h2>
+      </div>
+      <div class="agenda">
+        <div class="agenda-item"><span>Opening reality check</span><span class="time">10 min</span></div>
+        <div class="agenda-item"><span>Why AI feels dumb: free vs frontier</span><span class="time">10 min</span></div>
+        <div class="agenda-item"><span>The AI tool shift: browser to builder</span><span class="time">10 min</span></div>
+        <div class="agenda-item"><span>Why AI is not working yet</span><span class="time">15 min</span></div>
+        <div class="agenda-item"><span>The foundation owners must build</span><span class="time">25 min</span></div>
+        <div class="agenda-item"><span>Ownership, 90-day actions + discussion</span><span class="time">20 min</span></div>
+      </div>
+      <div class="footer"><span>Discussion is part of the product.</span><span class="slide-number">4 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">Why AI feels dumb</div>
+        <h2>You may be testing the weakest version of the thing.</h2>
+      </div>
+      <div class="model-reality">
+        <div class="model-card">
+          <div class="label">Free / base lane</div>
+          <h3>10 messages can fool you.</h3>
+          <ul>
+            <li>ChatGPT Free: up to 10 GPT-5.5 messages every 5 hours.</li>
+            <li>Free context window: 16K tokens.</li>
+            <li>After limits, chats fall back to mini.</li>
+            <li>Older GPT-4o / GPT-4.1 ChatGPT models retired Feb. 13, 2026.</li>
+          </ul>
+        </div>
+        <div class="model-card dark">
+          <div class="label">OpenAI frontier</div>
+          <h3>GPT-5.5 Pro is a different test.</h3>
+          <ul>
+            <li>GPT-5.5 Thinking: up to 400K context on Pro.</li>
+            <li>GPT-5.5 Pro API: 1.05M context, 128K max output.</li>
+            <li>Terminal-Bench 2.0: 82.7% vs GPT-5.4 at 75.1%.</li>
+            <li>Codex puts the model inside files, commands, and tests.</li>
+          </ul>
+        </div>
+        <div class="model-card">
+          <div class="label">Claude frontier</div>
+          <h3>Sonnet is not Opus.</h3>
+          <ul>
+            <li>Claude Code Pro: about 10-40 prompts every 5 hours.</li>
+            <li>Claude Max 20x: about 200-800 Claude Code prompts.</li>
+            <li>Opus 4.7: 1M context window for large work.</li>
+            <li>CursorBench: Opus 4.7 at 70% vs Opus 4.6 at 58%.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Official OpenAI + Anthropic examples, May 2026. Test the real tier before judging the category.</span><span class="slide-number">5 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">Browser AI to builder agents</div>
+        <h2>The jump is from answers to work.</h2>
+      </div>
+      <div class="graduation">
+        <div class="grad-panel">
+          <h3>Browser assistant</h3>
+          <div class="tag-row">
+            <div class="tag">ChatGPT</div>
+            <div class="tag">Claude.ai</div>
+            <div class="tag">Gemini</div>
+          </div>
+          <ul class="bullets">
+            <li>Answers questions.</li>
+            <li>Drafts and summarizes.</li>
+            <li>Analyzes files you provide.</li>
+            <li>Helps think through a problem.</li>
+          </ul>
+        </div>
+        <div class="grad-arrow"></div>
+        <div class="grad-panel dark">
+          <h3>Builder agent</h3>
+          <div class="tag-row">
+            <div class="tag">Codex</div>
+            <div class="tag">Claude Code</div>
+            <div class="tag">Cursor</div>
+          </div>
+          <ul class="bullets">
+            <li>Works inside a controlled workspace.</li>
+            <li>Reads files, code, docs, and configs.</li>
+            <li>Runs commands, tests, and checks.</li>
+            <li>Leaves behind durable tools.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Do not evaluate AI only by asking questions in a chat box.</span><span class="slide-number">6 / 17</span></div>
+    </section>
+
+    <section class="slide tool-slide">
+      <div>
+        <div class="kicker">Not pick-one-tool-and-run</div>
+        <h2>Different tools, same foundation.</h2>
+      </div>
+      <div class="tool-combo">
+        <div class="logo-grid">
+          <button type="button" class="logo-card company-card active" aria-pressed="true" data-name="ChatGPT" data-is="A general AI chat assistant from OpenAI." data-does="Drafts, analyzes, explains, codes, and reasons with the context you provide." data-doesnt="It does not automatically know your company systems, permissions, or live data unless you connect them."><div class="logo-top"><img class="brand-img" src="assets/logos/openai.svg" alt=""><div><div class="logo-name">ChatGPT</div><div class="logo-note">chat assistant</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Claude.ai" data-is="A general AI chat assistant from Anthropic." data-does="Strong for writing, analysis, summarizing, and long-context conversations." data-doesnt="It is not the same as Claude Code and does not work inside your local files by default."><div class="logo-top"><img class="brand-img" src="assets/logos/claude_logo.jpg" alt=""><div><div class="logo-name">Claude.ai</div><div class="logo-note">chat assistant</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Gemini" data-is="Google's AI assistant family." data-does="Works across text, images, files, and Google ecosystem workflows." data-doesnt="It does not fix disconnected or untrusted company data by itself."><div class="logo-top"><img class="brand-img" src="assets/logos/gemini_2025.png" alt=""><div><div class="logo-name">Gemini</div><div class="logo-note">Google AI</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Perplexity" data-is="An AI answer and research engine." data-does="Finds web information, summarizes sources, and helps compare outside information quickly." data-doesnt="It is not your internal operating system and should not be treated as a private company memory."><div class="logo-top"><img class="brand-img" src="assets/logos/perplexity.svg" alt=""><div><div class="logo-name">Perplexity</div><div class="logo-note">answer engine</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="NotebookLM" data-is="A source-grounded workspace from Google." data-does="Lets you load documents, ask questions against them, summarize, and create study-style outputs." data-doesnt="It is not a replacement for a governed company data layer or live workflow integrations."><div class="logo-top"><img class="brand-img" src="assets/logos/notebooklm.svg" alt=""><div><div class="logo-name">NotebookLM</div><div class="logo-note">source workspace</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Codex" data-is="OpenAI's coding agent for working in real project files." data-does="Reads codebases, edits files, runs commands, tests changes, and builds durable tools." data-doesnt="It is not just ChatGPT with a different logo; it needs repo access, context, and owner direction."><div class="logo-top"><img class="brand-img" src="assets/logos/codex_app.png" alt=""><div><div class="logo-name">Codex</div><div class="logo-note">coding agent</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Claude Code" data-is="Anthropic's coding agent for terminal and IDE workflows." data-does="Works with files, commands, Git, MCP servers, and local development workflows." data-doesnt="It is not the same experience as chatting at Claude.ai in a browser."><div class="logo-top"><img class="brand-img" src="assets/logos/claude_code_avatar.webp" alt=""><div><div class="logo-name">Claude Code</div><div class="logo-note">coding agent</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Cursor" data-is="An AI-first code editor." data-does="Brings AI into the editor for code search, edits, autocomplete, and project work." data-doesnt="It is not a business-data strategy; it still depends on what files and systems it can access."><div class="logo-top"><img class="brand-img" src="assets/logos/cursor.svg" alt=""><div><div class="logo-name">Cursor</div><div class="logo-note">AI code editor</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="GitHub Copilot" data-is="An AI coding assistant inside developer tools." data-does="Helps write code, review code, and assist developers inside GitHub and IDE workflows." data-doesnt="It does not replace product judgment or an internal owner who understands the business process."><div class="logo-top"><img class="brand-img" src="assets/logos/githubcopilot.svg" alt=""><div><div class="logo-name">GitHub Copilot</div><div class="logo-note">dev assistant</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Abacus.AI" data-is="An AI and agent platform." data-does="Can help build agents, apps, model workflows, and AI-enabled business processes." data-doesnt="It still needs clean source data, permissions, monitoring, and feedback to be useful."><div class="logo-top"><img class="brand-img" src="assets/logos/abacus.ico" alt=""><div><div class="logo-name">Abacus.AI</div><div class="logo-note">agent platform</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Copilot Studio" data-is="Microsoft's tool for building copilots and agents." data-does="Connects Microsoft ecosystem tools, workflows, knowledge sources, and agent experiences." data-doesnt="It will only be as good as the business rules, connectors, and data governance behind it."><div class="logo-top"><div class="ms-mark"><span></span><span></span><span></span><span></span></div><div><div class="logo-name">Copilot Studio</div><div class="logo-note">agent builder</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Make" data-is="A visual workflow automation platform." data-does="Moves data between systems and automates repeated handoffs without much custom code." data-doesnt="It is usually a bridge, not the long-term brain of the company."><div class="logo-top"><img class="brand-img" src="assets/logos/make.svg" alt=""><div><div class="logo-name">Make</div><div class="logo-note">automation</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Zapier" data-is="A broad app-to-app automation platform." data-does="Connects common SaaS tools and creates quick workflow automations." data-doesnt="It can create fragile process sprawl if nobody owns the workflow and feedback."><div class="logo-top"><img class="brand-img" src="assets/logos/zapier.svg" alt=""><div><div class="logo-name">Zapier</div><div class="logo-note">automation</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="n8n" data-is="A workflow automation platform that can be self-hosted." data-does="Connects systems, APIs, schedules, and custom logic with more ownership options." data-doesnt="It is not automatically smarter than the process map and data model you give it."><div class="logo-top"><img class="brand-img" src="assets/logos/n8n.svg" alt=""><div><div class="logo-name">n8n</div><div class="logo-note">automation</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Snowflake" data-is="A cloud data platform." data-does="Stores, joins, governs, and serves trusted company data for analytics and AI context." data-doesnt="It does not create business meaning unless the data is modeled, validated, and connected."><div class="logo-top"><img class="brand-img" src="assets/logos/snowflake.svg" alt=""><div><div class="logo-name">Snowflake</div><div class="logo-note">data platform</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Microsoft Azure" data-is="Microsoft's cloud platform." data-does="Hosts apps, identity, storage, functions, databases, and enterprise integrations." data-doesnt="It is infrastructure, not strategy; it needs architecture, security, and owned data design."><div class="logo-top"><div class="ms-mark"><span></span><span></span><span></span><span></span></div><div><div class="logo-name">Azure</div><div class="logo-note">cloud platform</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="PostgreSQL" data-is="An open-source relational database." data-does="Stores structured company data, joins records, powers apps, and can support AI context layers." data-doesnt="It is not automatically clean or AI-ready; the schema, refresh logic, and ownership matter."><div class="logo-top"><img class="brand-img" src="assets/logos/postgresql.svg" alt=""><div><div class="logo-name">PostgreSQL</div><div class="logo-note">owned database</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Avionte" data-is="A staffing ATS and operating system." data-does="Manages candidates, customers, jobs, assignments, activities, and staffing workflows." data-doesnt="It does not automatically expose all context in the shape AI needs without data work."><div class="logo-top"><img class="brand-img" src="assets/logos/avionte_icon_blue.png" alt=""><div><div class="logo-name">Avionte</div><div class="logo-note">ATS / DataLink</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Bullhorn" data-is="A large staffing ATS and CRM provider." data-does="Runs recruiting, sales, candidate, customer, and staffing operations for many firms." data-doesnt="It is not automatically an AI-ready company context layer; access and structure still matter."><div class="logo-top"><img class="brand-img" src="assets/logos/bullhorn.ico" alt=""><div><div class="logo-name">Bullhorn</div><div class="logo-note">ATS / CRM</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Ringover" data-is="A voice and communications platform." data-does="Captures call activity, recordings, outcomes, and communication signals." data-doesnt="It does not become intelligence until calls connect back to people, jobs, companies, and outcomes."><div class="logo-top"><img class="brand-img" src="assets/logos/ringover_icon.png" alt=""><div><div class="logo-name">Ringover</div><div class="logo-note">voice signals</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Power BI" data-is="Microsoft's business intelligence and reporting tool." data-does="Turns data into dashboards, metrics, reports, and operating visibility." data-doesnt="It is not the data foundation; it reflects the quality of the model underneath."><div class="logo-top"><img class="brand-img" src="assets/logos/powerbi.svg" alt=""><div><div class="logo-name">Power BI</div><div class="logo-note">reporting</div></div></div></button>
+          <button type="button" class="logo-card company-card" aria-pressed="false" data-name="Sense" data-is="A staffing engagement and communication platform." data-does="Supports outreach, journeys, messaging, surveys, and engagement workflows." data-doesnt="It is not enough to send messages; the responses and outcomes need to feed company learning."><div class="logo-top"><img class="brand-img" src="assets/logos/sense_logo.png" alt=""><div><div class="logo-name">Sense</div><div class="logo-note">engagement</div></div></div></button>
+        </div>
+        <div class="foundation-stack">
+          <div class="panel dark">
+            <h3>The advantage is portable context</h3>
+            <p>The tool stack will change. The company capability should keep compounding.</p>
+          </div>
+          <div class="foundation-item"><strong>Clean data</strong><span>Trusted source records, validated joins, known gaps.</span></div>
+          <div class="foundation-item"><strong>Usable connections</strong><span>APIs, exports, permissions, shared formats.</span></div>
+          <div class="foundation-item"><strong>Injected context</strong><span>Policies, examples, instructions, rules, and business meaning.</span></div>
+          <div class="foundation-item"><strong>Feedback loops</strong><span>Usage, corrections, outcomes, and learning signals.</span></div>
+        </div>
+      </div>
+      <div class="tool-about" aria-live="polite">
+        <div>
+          <h3 id="toolAboutName">ChatGPT</h3>
+          <p id="toolAboutIs">A general AI chat assistant from OpenAI.</p>
+        </div>
+        <div>
+          <strong>What it does</strong>
+          <p id="toolAboutDoes">Drafts, analyzes, explains, codes, and reasons with the context you provide.</p>
+        </div>
+        <div>
+          <strong>What it does not do</strong>
+          <p id="toolAboutDoesnt">It does not automatically know your company systems, permissions, or live data unless you connect them.</p>
+        </div>
+      </div>
+      <div class="footer"><span>Vendor loyalty is not the advantage.</span><span class="slide-number">7 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">Why AI fails</div>
+        <h2>AI is not magic dust for broken workflows.</h2>
+      </div>
+      <div class="failure-grid">
+        <div class="failure"><strong>Siloed people</strong><span>Separate chats, tools, files, experiments.</span></div>
+        <div class="failure"><strong>Dirty data</strong><span>Duplicates, stale records, locked reports.</span></div>
+        <div class="failure"><strong>Tribal workflows</strong><span>The real process lives in heads.</span></div>
+        <div class="failure"><strong>No feedback</strong><span>No corrections, outcomes, usage, or learning.</span></div>
+        <div class="failure"><strong>Bolted-on tools</strong><span>Small gains on the wrong process.</span></div>
+      </div>
+      <div class="footer"><span>If the workflow is broken, AI may only help you do it faster.</span><span class="slide-number">8 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">The learning loop</div>
+        <h2>AI gets smarter when the company captures the work.</h2>
+      </div>
+      <div class="cycle-wrap">
+        <div class="cycle">
+          <div class="cycle-step c1"><strong>Capture</strong><span>content, records, events, context</span></div>
+          <div class="cycle-step c2"><strong>Use</strong><span>staff tools, agents, workflows</span></div>
+          <div class="cycle-step c3"><strong>Observe</strong><span>what was shown, changed, skipped</span></div>
+          <div class="cycle-step c4"><strong>Correct</strong><span>feedback, edits, approvals, rejects</span></div>
+          <div class="cycle-step c5"><strong>Learn</strong><span>patterns, outcomes, better rules</span></div>
+          <div class="cycle-step c6"><strong>Improve</strong><span>prompts, data, tools, process</span></div>
+          <div class="cycle-center">Company<br>Learning<br>System</div>
+        </div>
+        <div class="panel dark">
+          <h3>The missing signal</h3>
+          <p>Most companies use tools but fail to capture what happened. The feedback loop is what turns one-off AI usage into company intelligence.</p>
+          <ul class="bullets">
+            <li>What did the AI suggest?</li>
+            <li>What did staff accept or change?</li>
+            <li>What was the business outcome?</li>
+            <li>What should the system do differently next time?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Usage without feedback is a wasted learning signal.</span><span class="slide-number">9 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">Data, context, connections</div>
+        <h2>The record has to become alive.</h2>
+      </div>
+      <div class="loop">
+        <div class="loop-node"><strong>Business activity</strong><span>Calls, emails, meetings, jobs, candidate movement.</span></div>
+        <div class="center"><strong>Company<br>Context<br>Layer</strong></div>
+        <div class="loop-node"><strong>Connected data</strong><span>ATS, CRM, payroll, accounting, reports, documents.</span></div>
+        <div class="loop-node"><strong>AI tools + agents</strong><span>Assist, monitor, summarize, flag, build, review.</span></div>
+        <div class="loop-node"><strong>Feedback</strong><span>Accepted, edited, rejected, corrected, approved, measured.</span></div>
+      </div>
+      <div class="footer"><span>Records should update from what is happening, not only from what someone types.</span><span class="slide-number">10 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">PRO context layer today - May 2026</div>
+        <h2>This is what getting the data ready actually means.</h2>
+      </div>
+      <div class="context-stack">
+        <div class="stack-col">
+          <div class="stack-title">Inputs</div>
+          <div class="stack-card"><strong>Avionte DataLink</strong><span>200+ views loaded into lab mirror, about 38 GB.</span></div>
+          <div class="stack-card"><strong>Ringover</strong><span>90-day call backfill with 57k+ call records.</span></div>
+          <div class="stack-card"><strong>Sense / BOLD activity</strong><span>Workflow signals and writebacks visible through activity trails.</span></div>
+          <div class="stack-card"><strong>Staff feedback</strong><span>Corrections, usage, approvals, rejections, and outcomes.</span></div>
+        </div>
+        <div class="stack-core">
+          <strong>PRO_PG<br>Context Substrate</strong>
+          <span>PRO-owned lab database for mirror data, Smart Tables, AI Context bundles, embeddings, refresh logs, and future writebacks.</span>
+          <div class="tag-row">
+            <div class="tag">DataLink</div>
+            <div class="tag">Mirror</div>
+            <div class="tag">Smart Tables</div>
+            <div class="tag">AI Context</div>
+            <div class="tag">Consumption</div>
+          </div>
+        </div>
+        <div class="stack-col">
+          <div class="stack-title">Built / Next</div>
+          <div class="stack-card"><strong>Smart Table prototype</strong><span>Talent call history enriched for 12k+ talent records.</span></div>
+          <div class="stack-card"><strong>Field registry</strong><span>560+ concepts mapped across DataLink, API, Power BI, BOLD UI, and Sense.</span></div>
+          <div class="stack-card"><strong>Context shells</strong><span>Candidate, job, customer, contact, and recruiter folders planned.</span></div>
+          <div class="stack-card"><strong>Consumption</strong><span>Resume Builder, Power BI, Chrome extension, MCP agents, and future owner tools.</span></div>
+        </div>
+      </div>
+      <div class="footer"><span>Sanitized architecture snapshot, rounded for discussion.</span><span class="slide-number">11 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">Infrastructure picture</div>
+        <h2>PRO-owned context substrate: vendors orbit the center.</h2>
+      </div>
+      <div class="infra-map" role="img" aria-label="PRO infrastructure relationship map">
+        <svg viewBox="0 0 1160 620" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="infraArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#9aa8b8" />
+            </marker>
+            <marker id="infraArrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#2b6cb0" />
+            </marker>
+          </defs>
+
+          <rect class="hub" x="458" y="246" width="244" height="104" rx="8"/>
+          <text class="hub-title" x="580" y="286" text-anchor="middle">PRO_PG Context</text>
+          <text class="hub-title" x="580" y="310" text-anchor="middle">Substrate</text>
+          <text class="hub-sub" x="580" y="330" text-anchor="middle">the layer PRO owns; vendors orbit</text>
+
+          <path class="edge heavy" marker-end="url(#infraArrowBlue)" d="M218,90 C344,112 404,208 458,260"/>
+          <path class="edge heavy" marker-end="url(#infraArrowBlue)" d="M218,220 C326,234 386,266 458,292"/>
+          <path class="edge heavy" marker-end="url(#infraArrowBlue)" d="M218,350 C328,348 388,332 458,318"/>
+          <path class="edge heavy" marker-end="url(#infraArrowBlue)" d="M218,480 C340,452 398,382 458,336"/>
+
+          <path class="edge heavy" marker-end="url(#infraArrowBlue)" d="M932,86 C812,114 756,210 702,262"/>
+          <path class="edge heavy" marker-end="url(#infraArrowBlue)" d="M932,206 C810,210 758,258 702,284"/>
+          <path class="edge" marker-end="url(#infraArrow)" d="M932,326 C812,324 758,314 702,306"/>
+          <path class="edge warn" marker-end="url(#infraArrow)" d="M932,446 C814,404 760,344 702,318"/>
+          <path class="edge" marker-end="url(#infraArrow)" d="M932,552 C814,498 760,394 702,336"/>
+
+          <rect class="node" x="58" y="52" width="160" height="76"/>
+          <text class="node-title" x="138" y="82" text-anchor="middle">Resume Builder</text>
+          <text class="node-sub" x="138" y="103" text-anchor="middle">Azure Functions + SPA</text>
+
+          <rect class="node" x="58" y="182" width="160" height="76"/>
+          <text class="node-title" x="138" y="212" text-anchor="middle">Lag Observer</text>
+          <text class="node-sub" x="138" y="233" text-anchor="middle">1-min DataLink polling</text>
+
+          <rect class="node" x="58" y="312" width="160" height="76"/>
+          <text class="node-title" x="138" y="342" text-anchor="middle">PRO PG Context</text>
+          <text class="node-sub" x="138" y="363" text-anchor="middle">Postgres substrate</text>
+
+          <rect class="node" x="58" y="442" width="160" height="76"/>
+          <text class="node-title" x="138" y="472" text-anchor="middle">Sales Intel</text>
+          <text class="node-sub" x="138" y="493" text-anchor="middle">DataLink extracts</text>
+
+          <rect class="node" x="932" y="50" width="160" height="72"/>
+          <text class="node-title" x="1012" y="78" text-anchor="middle">Power BI MCP</text>
+          <text class="node-sub" x="1012" y="99" text-anchor="middle">Desktop + Service</text>
+
+          <rect class="node" x="932" y="170" width="170" height="72"/>
+          <text class="node-title" x="1017" y="198" text-anchor="middle">Chrome Extension</text>
+          <text class="node-sub" x="1017" y="219" text-anchor="middle">Recruiter sidebar</text>
+
+          <rect class="node" x="932" y="290" width="160" height="72"/>
+          <text class="node-title" x="1012" y="318" text-anchor="middle">Graph MCP</text>
+          <text class="node-sub" x="1012" y="339" text-anchor="middle">SharePoint via Graph</text>
+
+          <rect class="node" x="932" y="410" width="170" height="72"/>
+          <text class="node-title" x="1017" y="438" text-anchor="middle">Oak City Contract</text>
+          <text class="node-sub" x="1017" y="459" text-anchor="middle">Webhook + schema specs</text>
+
+          <rect class="node" x="932" y="516" width="160" height="72"/>
+          <text class="node-title" x="1012" y="544" text-anchor="middle">BOLD Reference</text>
+          <text class="node-sub" x="1012" y="565" text-anchor="middle">Rendered field maps</text>
+
+          <rect class="node" x="334" y="40" width="170" height="72"/>
+          <text class="node-title" x="419" y="68" text-anchor="middle">Microsoft / Azure</text>
+          <text class="node-sub" x="419" y="89" text-anchor="middle">SWA, Blob, Graph, Entra</text>
+          <path class="edge" marker-end="url(#infraArrow)" d="M436,112 C464,164 528,206 556,246"/>
+
+          <rect class="node" x="642" y="34" width="220" height="84"/>
+          <text class="node-title" x="752" y="64" text-anchor="middle">Avionte BOLD</text>
+          <text class="node-sub" x="752" y="85" text-anchor="middle">ATS operating system</text>
+          <text class="node-sub" x="752" y="103" text-anchor="middle">read + writeback</text>
+          <path class="edge heavy" marker-end="url(#infraArrowBlue)" d="M720,118 C666,160 628,206 606,246"/>
+          <path class="edge heavy" marker-end="url(#infraArrowBlue)" d="M646,246 C688,194 734,154 766,118"/>
+          <path class="edge heavy" marker-end="url(#infraArrowBlue)" d="M218,70 C358,4 510,4 642,58"/>
+
+          <rect class="node" x="280" y="528" width="150" height="60"/>
+          <text class="node-title" x="355" y="552" text-anchor="middle">Ringover</text>
+          <text class="node-sub" x="355" y="571" text-anchor="middle">Calls + voice signals</text>
+          <path class="edge heavy" marker-end="url(#infraArrowBlue)" d="M430,540 C502,480 548,394 566,350"/>
+
+          <rect class="node" x="505" y="528" width="170" height="60"/>
+          <text class="node-title" x="590" y="552" text-anchor="middle">Partner / Ops Feeds</text>
+          <text class="node-sub" x="590" y="571" text-anchor="middle">Haley + ops feeds</text>
+          <path class="edge" marker-end="url(#infraArrow)" d="M590,528 C588,462 584,394 580,350"/>
+
+          <rect class="node" x="730" y="528" width="170" height="60"/>
+          <text class="node-title" x="815" y="552" text-anchor="middle">Local Workstation</text>
+          <text class="node-sub" x="815" y="571" text-anchor="middle">Task Scheduler, local PBIX</text>
+          <path class="edge" marker-end="url(#infraArrow)" d="M815,528 C720,468 632,392 600,350"/>
+        </svg>
+      </div>
+      <div class="footer"><span>Heavy blue lines are active runtime/data paths and writeback loops.</span><span class="slide-number">12 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">The AI whisperer problem</div>
+        <h2>AI still needs someone who knows what good work looks like.</h2>
+      </div>
+      <div class="operator">
+        <div class="operator-map" aria-hidden="true">
+          <div class="orbit o1">Recruiting</div>
+          <div class="orbit o2">Sales</div>
+          <div class="orbit o3">Payroll</div>
+          <div class="orbit o4">Client promises</div>
+          <div class="orbit o5">Data</div>
+          <div class="orbit o6">Exceptions</div>
+          <div class="person">AI<br>Operator</div>
+        </div>
+        <ul class="bullets">
+          <li>Gives direction and clarifies intent.</li>
+          <li>Checks the work against reality.</li>
+          <li>Knows systems and processes top to bottom.</li>
+          <li>Catches what sounds right but is missing.</li>
+        </ul>
+      </div>
+      <div class="footer"><span>AI raises the value of operational judgment.</span><span class="slide-number">13 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">Ownership boundary</div>
+        <h2>You can hire help. You cannot outsource ownership.</h2>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <h3>Outside help can</h3>
+          <ul class="bullets">
+            <li>Advise</li>
+            <li>Build</li>
+            <li>Train</li>
+            <li>Integrate</li>
+            <li>Accelerate</li>
+          </ul>
+        </div>
+        <div class="panel dark">
+          <h3>Internal owners must</h3>
+          <ul class="bullets">
+            <li>Bring judgment</li>
+            <li>Explain context</li>
+            <li>Own accountability</li>
+            <li>Govern access</li>
+            <li>Keep learning</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>A tool without internal capability is dependency.</span><span class="slide-number">14 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Build vs buy</div>
+      <div class="contrast">
+        <div class="panel">
+          <div class="label">Old question</div>
+          <div class="question">What software should I subscribe to?</div>
+        </div>
+        <div class="panel dark">
+          <div class="label">New question</div>
+          <div class="question">What intelligence should my company own?</div>
+        </div>
+      </div>
+      <div class="footer"><span>SaaS still matters. Blindly renting every workflow does not.</span><span class="slide-number">15 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">Next 90 days</div>
+        <h2>Start small. Make the company smarter.</h2>
+      </div>
+      <div class="checklist">
+        <div class="check">Assign an internal AI owner.</div>
+        <div class="check">Pay for serious tools and test them properly.</div>
+        <div class="check">Create a basic AI data policy.</div>
+        <div class="check">Inventory systems and data sources.</div>
+        <div class="check">Find the person who knows the process end to end.</div>
+        <div class="check">Document one painful workflow.</div>
+        <div class="check">Collect usage, corrections, outcomes, and feedback.</div>
+        <div class="check">Ask vendors about APIs, exports, logs, retention, and permissions.</div>
+      </div>
+      <div class="footer"><span>The room discussion starts here.</span><span class="slide-number">16 / 17</span></div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <div class="kicker">Room discussion</div>
+        <h2>Where should owners start?</h2>
+      </div>
+      <div class="discussion">
+        <div>Where do you lose the most time every week?</div>
+        <div>What knowledge lives in someone&apos;s head?</div>
+        <div>What data can you not access today?</div>
+        <div>What workflow breaks if one key person leaves?</div>
+        <div>What AI tool disappointed you, and why?</div>
+        <div>What should never go into public AI?</div>
+      </div>
+      <div class="footer"><span>Optional slide if discussion needs a prompt.</span><span class="slide-number">17 / 17</span></div>
+    </section>
+  </main>
+
+  <nav class="controls" aria-label="Slide controls">
+    <button type="button" data-action="prev">Previous</button>
+    <button type="button" data-action="next">Next</button>
+    <button type="button" data-action="print">Print / PDF</button>
+  </nav>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const deck = document.querySelector(".deck");
+    let index = 0;
+
+    slides.forEach((slide, i) => {
+      const number = slide.querySelector(".slide-number");
+      if (number) number.textContent = `${i + 1} / ${slides.length}`;
+    });
+
+    const toolCards = Array.from(document.querySelectorAll(".company-card"));
+    const aboutName = document.querySelector("#toolAboutName");
+    const aboutIs = document.querySelector("#toolAboutIs");
+    const aboutDoes = document.querySelector("#toolAboutDoes");
+    const aboutDoesnt = document.querySelector("#toolAboutDoesnt");
+
+    function showTool(card) {
+      toolCards.forEach((item) => {
+        const active = item === card;
+        item.classList.toggle("active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
+      aboutName.textContent = card.dataset.name;
+      aboutIs.textContent = card.dataset.is;
+      aboutDoes.textContent = card.dataset.does;
+      aboutDoesnt.textContent = card.dataset.doesnt;
+    }
+
+    toolCards.forEach((card) => {
+      card.addEventListener("click", () => showTool(card));
+    });
+
+    function fitDeck() {
+      const scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+      deck.style.zoom = scale;
+    }
+
+    function showSlide(nextIndex) {
+      index = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
+      window.location.hash = String(index + 1).padStart(2, "0");
+    }
+
+    function fromHash() {
+      const raw = Number(window.location.hash.replace("#", ""));
+      if (Number.isFinite(raw) && raw > 0) showSlide(raw - 1);
+    }
+
+    document.addEventListener("keydown", (event) => {
+      const interactiveTarget = event.target.closest("button, a, input, select, textarea");
+      if (interactiveTarget && event.key === " ") return;
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        showSlide(index + 1);
+      }
+      if (["ArrowLeft", "PageUp", "Backspace"].includes(event.key)) {
+        event.preventDefault();
+        showSlide(index - 1);
+      }
+      if (event.key === "Home") showSlide(0);
+      if (event.key === "End") showSlide(slides.length - 1);
+    });
+
+    document.querySelector("[data-action='prev']").addEventListener("click", () => showSlide(index - 1));
+    document.querySelector("[data-action='next']").addEventListener("click", () => showSlide(index + 1));
+    document.querySelector("[data-action='print']").addEventListener("click", () => window.print());
+    window.addEventListener("hashchange", fromHash);
+    window.addEventListener("resize", fitDeck);
+    fitDeck();
+    fromHash();
+  </script>
+</body>
+</html>
